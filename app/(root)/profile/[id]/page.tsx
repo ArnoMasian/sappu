@@ -42,7 +42,7 @@ async function Page({ params }: { params: { id: string } }) {
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
 
-                {tab.label === "Threads" && (
+                {tab.label === "Posts" && (
                   <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
                     {userInfo.threads.length}
                   </p>
@@ -60,6 +60,7 @@ async function Page({ params }: { params: { id: string } }) {
               <ThreadsTab
                 currentUserId={user.id}
                 accountId={userInfo.id}
+                image={userInfo.image}
                 accountType="User"
               />
             </TabsContent>

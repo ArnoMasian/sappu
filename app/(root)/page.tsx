@@ -29,7 +29,7 @@ async function Home({
 
       <section className="mt-9 flex flex-col gap-10">
         {result.posts.length === 0 ? (
-          <p className="no-result">No threads found</p>
+          <p className="no-result">No Posts found</p>
         ) : (
           <>
             {result.posts.map((post) => (
@@ -39,6 +39,7 @@ async function Home({
                 currentUserId={user.id}
                 parentId={post.parentId}
                 content={post.text}
+                image={post.image}
                 author={post.author}
                 community={post.community}
                 createdAt={post.createdAt}

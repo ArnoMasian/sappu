@@ -9,6 +9,7 @@ interface Props {
   currentUserId: string;
   parentId: string | null;
   content: string;
+  image: string | null;
   author: {
     name: string;
     image: string;
@@ -33,6 +34,7 @@ function ThreadCard({
   currentUserId,
   parentId,
   content,
+  image,
   author,
   community,
   createdAt,
@@ -67,7 +69,19 @@ function ThreadCard({
               </h4>
             </Link>
 
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            <div>
+              <p className="mt-5 text-small-regular text-light-2">{content}</p>
+            </div>
+
+            {image && (
+              <Image
+                src={image}
+                alt="thread_image"
+                width={500}
+                height={500}
+                className="rounded-lg mt-5 object-contain"
+              />
+            )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">
@@ -150,9 +164,8 @@ function ThreadCard({
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
-            {formatDateString(createdAt)} - {community.name} Community
+            {formatDateString(createdAt)} - {community.name}
           </p>
-
           <Image
             src={community.image}
             alt={community.name}

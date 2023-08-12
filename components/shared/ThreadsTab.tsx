@@ -53,9 +53,11 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
     redirect("/");
   }
 
+  const reversedThreads = result.threads.reverse();
+
   return (
     <section className="mt-9 flex flex-col gap-10">
-      {result.threads.map((thread) => (
+      {reversedThreads.map((thread) => (
         <ThreadCard
           key={thread._id}
           id={thread._id}

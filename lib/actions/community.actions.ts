@@ -14,7 +14,8 @@ export async function createCommunity(
   username: string,
   image: string,
   bio: string,
-  createdById: string // Change the parameter name to reflect it's an id
+  createdById: string,
+  followers: string[]
 ) {
   try {
     connectToDB();
@@ -32,6 +33,7 @@ export async function createCommunity(
       username,
       image,
       bio,
+      followers,
       createdBy: user._id, // Use the mongoose ID of the user
     });
 
@@ -45,6 +47,48 @@ export async function createCommunity(
   } catch (error) {
     // Handle any errors
     console.error("Error creating community:", error);
+    throw error;
+  }
+}
+
+export async function addFollowerToCommunity(
+  communityId: string,
+  followerId: string
+) {
+  try {
+    connectToDB();
+
+    // Find the community by its unique id
+    const community = await Community.findOne({ id: communityId });
+
+    if (!community) {
+      throw new Error("Community not found");
+    }
+
+    // Find the follower (user) by their unique id
+    const follower = await User.findOne({ id: followerId });
+
+    if (!follower) {
+      throw new Error("Follower not found");
+    }
+
+    // Check if the follower is already in the followers array
+    if (community.followers.includes(follower._id)) {
+      throw new Error("Follower is already part of the community's followers");
+    }
+
+    // Add the follower's _id to the followers array in the community
+    community.followers.push(follower._id);
+    await community.save();
+
+    // Add the community's _id to the communities array in the follower (user)
+    follower.communities.push(community._id);
+    await follower.save();
+
+    return community;
+  } catch (error) {
+    // Handle any errors
+    console.error("Error adding follower to community:", error);
     throw error;
   }
 }

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import React, { useState } from "react";
 
 interface Props {
   accountId: string;
@@ -20,6 +23,18 @@ function ProfileHeader({
   bio,
   type,
 }: Props) {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followersCount, setFollowersCount] = useState(253);
+
+  const handleFollowClick = () => {
+    if (!isFollowing) {
+      setFollowersCount(followersCount + 1);
+    } else {
+      setFollowersCount(followersCount - 1);
+    }
+    setIsFollowing(!isFollowing);
+  };
+
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
@@ -39,26 +54,58 @@ function ProfileHeader({
             </h2>
             <p className="text-base-medium text-gray-1">@{username}</p>
           </div>
-        </div>
-        {accountId === authUserId && type !== "Community" && (
-          <Link href="/profile/edit">
-            <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2">
-              <Image
-                src="/assets/edit.svg"
-                alt="logout"
-                width={16}
-                height={16}
-              />
+          {accountId === authUserId && type !== "Community" && (
+            <Link href="/profile/edit">
+              <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2">
+                <Image
+                  src="/assets/edit.svg"
+                  alt="logout"
+                  width={16}
+                  height={16}
+                />
 
-              <p className="text-light-2 max-sm:hidden">Edit</p>
-            </div>
-          </Link>
-        )}
+                {/* <p className="text-light-2 max-sm:hidden">Edit</p> */}
+              </div>
+            </Link>
+          )}
+        </div>
+
+        <Link href="#">
+          <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2">
+            <Image src="/assets/rank.svg" alt="logout" width={50} height={50} />
+          </div>
+          <div className="flex justify-center mt-2">
+            <p className="text-light-2 max-sm:hidden">Rank</p>
+          </div>
+        </Link>
       </div>
 
       <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
 
       <div className="mt-12 h-0.5 w-full bg-dark-3" />
+      {type === "Community" && (
+        <div className="flex justify-between mt-8">
+          <div>
+            <button
+              className="flex cursor-pointer gap-3 rounded-lg bg-blue px-4 py-2"
+              onClick={handleFollowClick}
+            >
+              <p className="text-white">
+                {isFollowing ? "Following" : "Follow"}
+              </p>
+            </button>
+          </div>
+
+          <div>
+            <p className="text-white flex justify-center mt-2 mr-5 font-bold">
+              {followersCount}
+            </p>
+            <p className="text-white flex justify-center mt-1 mr-5">
+              Followers
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

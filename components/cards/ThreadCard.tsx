@@ -88,44 +88,48 @@ function ThreadCard({
         <Image
           src={image}
           alt="thread_image"
-          width={7000}
-          height={500}
-          className="rounded-lg mt-5 object-cover"
+          width={1000}
+          height={1000}
+          className="rounded-lg mt-5 object-contain"
         />
       )}
 
-      <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-        <div className="flex gap-3.5">
-          <Image
-            src="/assets/heart-gray.svg"
-            alt="heart"
-            width={24}
-            height={24}
-            className="cursor-pointer object-contain"
-          />
-          <Link href={`/thread/${id}`}>
+      <div className="flex justify-between">
+        <div> </div>
+
+        <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
+          <div className="flex gap-3.5">
             <Image
-              src="/assets/reply.svg"
+              src="/assets/heart-red.svg"
               alt="heart"
               width={24}
               height={24}
               className="cursor-pointer object-contain"
             />
-          </Link>
-          <Image
-            src="/assets/repost.svg"
-            alt="heart"
-            width={24}
-            height={24}
-            className="cursor-pointer object-contain"
-          />
-          <Image
-            src="/assets/share.svg"
-            alt="heart"
-            width={24}
-            height={24}
-            className="cursor-pointer object-contain"
-          />
+            <Link href={`/thread/${id}`}>
+              <Image
+                src="/assets/reply.svg"
+                alt="heart"
+                width={24}
+                height={24}
+                className="cursor-pointer object-contain"
+              />
+            </Link>
+            <Image
+              src="/assets/repost.svg"
+              alt="heart"
+              width={24}
+              height={24}
+              className="cursor-pointer object-contain"
+            />
+            <Image
+              src="/assets/share.svg"
+              alt="heart"
+              width={24}
+              height={24}
+              className="cursor-pointer object-contain"
+            />
+          </div>
         </div>
 
         {isComment && comments.length > 0 && (
